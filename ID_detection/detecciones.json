@@ -1,0 +1,18 @@
+[
+  {
+    "track_id": 34,
+    "box": [
+      139,
+      149,
+      599,
+      479
+    ],
+    "center_px": [
+      369,
+      314
+    ],
+    "confidence": 0.898,
+    "camiseta": "gris",
+    "person_id": 1
+  }
+]
