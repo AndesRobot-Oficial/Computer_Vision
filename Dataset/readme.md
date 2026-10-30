@@ -3,7 +3,8 @@
 **Responsable:** Piero Vilcapoma  
 **Fecha:** 24-10-2026  
 **Tarea:** Corrección de anotaciones de la clase `cutlery` y preparación del dataset para Roboflow.  
-**Equipo:** Visión — dataset (Juan Diego, Valentina, Piero, Torres, Angelica, Manuel)
+**Equipo:** Visión — dataset (Juan Diego, Valentina, Piero, Torres, Angelica, Manuel)  
+**Código de integración con RealSense y garra (`code_dataset/`):** Juan Avendaño
 
 ## 0. Contexto: por qué se dividió `cutlery`
 
@@ -116,4 +117,32 @@ Además, el script de búsqueda de etiquetas faltantes (`buscar_sin_etiquetar.py
 | 5 | Antes de crear la nueva versión: revisar las **4,568 imágenes sin anotar** que aparecen en Roboflow (45 % del dataset); si entran así, el modelo aprende a ignorar objetos | Juan Diego |
 | 6 | Crear la versión nueva con el **mismo augmentation que la v2** (la v3 del 21-10 no tiene augmentation y no es comparable) y reentrenar | Juan Diego |
 | 7 | Comparar las métricas nuevas de `spoon`/`fork`/`knife` contra la línea base de la sección 5 | Piero |
+| 8 | Probar `gripper_controller.py` con la garra y validar su funcionamiento | Juan Avendaño |
 
+## 8. Código para usar el dataset con la RealSense y la garra (`code_dataset/`)
+
+**Autor:** Juan Avendaño
+
+Se añadió al repositorio la carpeta `code_dataset/`, con el código que lleva el dataset a la práctica: detectar objetos con la cámara **Intel RealSense**, obtener su distancia y, como siguiente paso, usar esa información para controlar la **garra** del robot.
+
+### Estructura
+
+```text
+code_dataset/
+├── detect.py              # RealSense + modelo entrenado: detección y distancia 3D
+├── gripper_controller.py  # detect.py + control de la garra
+└── models/                # dataset/modelo de prueba (funciona)
+```
+
+### Archivos
+
+| Archivo | Qué hace | Estado |
+|---|---|---|
+| `detect.py` | Usa **solo la RealSense** junto con el dataset para detectar objetos y entregar su **distancia en los 3 ejes (X, Y, Z)** | ✅ Funciona |
+| `gripper_controller.py` | Reúne todo lo de `detect.py` y lo conecta con la **garra** para actuar sobre el objeto detectado | ⚠️ **Aún no probado** |
+| `models/` | Contiene un dataset de prueba para poder ejecutar el código | ✅ Funciona |
+
+### Notas
+
+- El dataset de `models/` es **solo de prueba**: sirve para verificar que el pipeline completo funciona. Cuando se reentrene con las clases `spoon`, `fork` y `knife` (sección 7), habrá que reemplazarlo por el modelo nuevo.
+- `gripper_controller.py` **no debe usarse con el robot** hasta validarlo; conviene probarlo primero sin la garra conectada o con velocidad reducida.
