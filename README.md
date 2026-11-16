@@ -120,4 +120,4 @@ Los vectores faciales y las fotografías de personas pueden ser **datos biométr
 
 ## 7. Equipo
 
-Equipo de Visión Computacional, RoboCup@Home: [nombres de los integrantes].
+Equipo de Visión Computacional, RoboCup@Home
